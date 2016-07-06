@@ -4,7 +4,7 @@ You need something to evaluate expression and because of reasons you don't use Q
 
 ### Example usage
 ```cpp
-#include
+#include "qexpression.cpp"
 
 QExpression e("3 + 4 * 2 / ( 1 - 5 ) ^ 2");
 e.eval();
