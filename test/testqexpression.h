@@ -19,6 +19,9 @@ private slots:
     void simpleSum();
     void simpleDiv();
     void complexExpression();
+    void sampleFunction();
+    void functionWithThreeParameters();
+    void functionWithWrongNumberOfArguments();
 };
 
 #endif // TESTQEXPRESSION_H
