@@ -61,6 +61,27 @@ void TestQExpression::complexExpression()
     QCOMPARE(e.result(), 3.5);
 }
 
+void TestQExpression::sampleFunction()
+{
+    QExpression e("sqrt ( 4 )");
+    QVERIFY(e.eval());
+    QCOMPARE(e.result(), 2.0);
+}
+
+void TestQExpression::functionWithThreeParameters()
+{
+    QExpression e("max_of_three ( 1, 4, 2 )");
+    QVERIFY(e.eval());
+    QCOMPARE(e.result(), 4.0);
+}
+
+void TestQExpression::functionWithWrongNumberOfArguments()
+{
+    QExpression e("max_of_three ( 1, 2 )");
+    QVERIFY(!e.eval());
+    QCOMPARE(e.error(), QExpression::WrongNumberOfArguments);
+}
+
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
