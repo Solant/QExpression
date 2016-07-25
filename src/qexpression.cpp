@@ -23,6 +23,7 @@ bool QExpression::eval()
         m_error = NoExpression;
         return false;
     }
+    normalize();
     if (!toReversePolishNotation()) {
         return false;
     }
@@ -80,6 +81,9 @@ bool QExpression::toReversePolishNotation()
     QStringList symbols = m_expression.split(QRegularExpression("[ ,]+"));
     QStack<QString> stack;
     Q_FOREACH (const QString &symbol, symbols) {
+        if (symbol.isEmpty()) {
+            continue;
+        }
         if (symbol == "(") {
             stack.push(symbol);
             continue;
@@ -139,9 +143,23 @@ bool QExpression::toReversePolishNotation()
     return true;
 }
 
+void QExpression::normalize()
+{
+    for (int i = 0; i < m_functions.size(); ++i) {
+        const BaseFunction *func = m_functions.at(i);
+        int index = m_expression.indexOf(func->name(), 0);
+        while (index != -1) {
+            m_expression.insert(index, " ");
+            m_expression.insert(index + 1 + func->name().size(), " ");
+            index = m_expression.indexOf(func->name(),
+                                         index + 1 + func->name().size());
+        }
+    }
+}
+
 bool isNumber(const QString &arg)
 {
-    const QRegularExpression re("[0-9]+");
+    static QRegularExpression re("[0-9]+");
     return re.match(arg).hasMatch();
 }
 
@@ -187,7 +205,12 @@ FunctionList::FunctionList()
 
 FunctionList::~FunctionList() { qDeleteAll(m_functionList); }
 
-const BaseFunction *FunctionList::op(const QString &signature)
+const BaseFunction *FunctionList::at(int i) const
+{
+    return m_functionList.at(i);
+}
+
+const BaseFunction *FunctionList::op(const QString &signature) const
 {
     Q_FOREACH (const BaseFunction *op, m_functionList) {
         if (op->name() == signature)
@@ -196,7 +219,9 @@ const BaseFunction *FunctionList::op(const QString &signature)
     return Q_NULLPTR;
 }
 
-int FunctionList::priority(const QString &signature)
+int FunctionList::size() const { return m_functionList.size(); }
+
+int FunctionList::priority(const QString &signature) const
 {
     Q_FOREACH (const BaseFunction *op, m_functionList) {
         if (op->name() == signature)
@@ -205,7 +230,7 @@ int FunctionList::priority(const QString &signature)
     return -1;
 }
 
-bool FunctionList::hasOperator(const QString &signature)
+bool FunctionList::hasOperator(const QString &signature) const
 {
     Q_FOREACH (const BaseFunction *op, m_functionList) {
         if (op->name() == signature)

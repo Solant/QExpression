@@ -55,9 +55,11 @@ class FunctionList
 public:
     FunctionList();
     ~FunctionList();
-    const BaseFunction *op(const QString &signature);
-    int priority(const QString &signature);
-    bool hasOperator(const QString &signature);
+    const BaseFunction *at(int i) const;
+    const BaseFunction *op(const QString &signature) const;
+    int size() const;
+    int priority(const QString &signature) const;
+    bool hasOperator(const QString &signature) const;
 };
 
 class QExpression
@@ -84,6 +86,7 @@ private:
     double m_result = 0.0;
     EvaluationError m_error = NoError;
     bool toReversePolishNotation();
+    void normalize();
 };
 
 #endif // QEXPRESSION_H
