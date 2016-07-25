@@ -52,6 +52,14 @@ bool QExpression::eval()
                 }
                 double value = function->function()(params);
                 stack.push(value);
+                break;
+            }
+            case BaseFunction::UnaryOperator: {
+                const UnaryOperator *uo
+                    = static_cast<const UnaryOperator *>(op);
+                double value = uo->function()(stack.pop());
+                stack.push(value);
+                break;
             }
             default:
                 break;
@@ -176,6 +184,14 @@ FunctionList::FunctionList()
         = new BinaryOperator("/", 2, [](double a, double b) { return a / b; });
     BinaryOperator *exp = new BinaryOperator(
         "^", 3, [](double a, double b) { return pow(a, b); });
+    UnaryOperator *fact = new UnaryOperator("!", 4, [](double a) {
+        Q_ASSERT(floor(a) == a);
+        double result = 1.0;
+        for (int i = 2; i <= a; i++) {
+            result *= i;
+        }
+        return result;
+    });
 
     // Here is the trick: we treat brackets as operators for simplification of
     // toReverseNotation() method, they will have lowest priority and no
@@ -201,6 +217,7 @@ FunctionList::FunctionList()
     m_functionList.append(exp);
     m_functionList.append(sqrtFunc);
     m_functionList.append(maxOfThree);
+    m_functionList.append(fact);
 }
 
 FunctionList::~FunctionList() { qDeleteAll(m_functionList); }
@@ -272,3 +289,12 @@ Function::Function(const QString &name, const int numberOfArguments,
 }
 
 CustomFunction Function::function() const { return m_function; }
+
+UnaryOperator::UnaryOperator(const QString &name, const int priority,
+                             const UnaryOperatorFunction function)
+    : BaseFunction(priority, 1, FunctionType::UnaryOperator, name),
+      m_function(function)
+{
+}
+
+UnaryOperatorFunction UnaryOperator::function() const { return m_function; }
