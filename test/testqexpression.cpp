@@ -16,7 +16,7 @@ void TestQExpression::evalAfterEmpty()
     QCOMPARE(e.eval(), false);
     QCOMPARE(e.error(), QExpression::NoExpression);
 
-    e.setExpression("1 + 2");
+    e.setExpression("1+2");
     QVERIFY(e.eval());
     QCOMPARE(e.error(), QExpression::NoError);
     QCOMPARE(e.result(), 3.0);
@@ -56,28 +56,28 @@ void TestQExpression::simpleDiv()
 
 void TestQExpression::complexExpression()
 {
-    QExpression e("3 + 4 * 2 / ( 1 - 5 ) ^ 2");
+    QExpression e("3 + 4 * 2 / (1 - 5)^2");
     QVERIFY(e.eval());
     QCOMPARE(e.result(), 3.5);
 }
 
 void TestQExpression::sampleFunction()
 {
-    QExpression e("sqrt ( 4 )");
+    QExpression e("sqrt(4)");
     QVERIFY(e.eval());
     QCOMPARE(e.result(), 2.0);
 }
 
 void TestQExpression::functionWithThreeParameters()
 {
-    QExpression e("max_of_three ( 1, 4, 2 )");
+    QExpression e("max_of_three(1, 4, 2 )");
     QVERIFY(e.eval());
     QCOMPARE(e.result(), 4.0);
 }
 
 void TestQExpression::functionWithWrongNumberOfArguments()
 {
-    QExpression e("max_of_three ( 1, 2 )");
+    QExpression e("max_of_three(1, 2)");
     QVERIFY(!e.eval());
     QCOMPARE(e.error(), QExpression::WrongNumberOfArguments);
 }
