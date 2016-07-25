@@ -1,3 +1,4 @@
+![alt badge](https://travis-ci.org/Solant/QExpression.svg?branch=master)
 # QExpression
 Simple expression evaluator for Qt framework with customizable operators. <br />
 You need something to evaluate expression and because of reasons you don't use QJSEngine or other similar thing? You came to the right neighborhood! 
@@ -6,7 +7,7 @@ You need something to evaluate expression and because of reasons you don't use Q
 ```cpp
 #include "qexpression.cpp"
 
-QExpression e("3 + 4 * 2 / ( 1 - 5 ) ^ 2");
+QExpression e("3 + 4 * 2 / (1 - 5)^2");
 e.eval();
 double result = e.result();//3.5
 ```
@@ -17,4 +18,4 @@ double result = e.result();//3.5
 
 ## Usage
 ### Operators
-You can define your own operators or change existing ones in OperatorList constructor in `qexpression.cpp` file.
+You can define your own operators and functions, or change existing ones in `OperatorList` constructor in `qexpression.cpp` file. Examples included.
