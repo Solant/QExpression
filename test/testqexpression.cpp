@@ -70,7 +70,7 @@ void TestQExpression::sampleFunction()
 
 void TestQExpression::functionWithThreeParameters()
 {
-    QExpression e("max_of_three(1, 4, 2 )");
+    QExpression e("max_of_three(1, 4, 2)");
     QVERIFY(e.eval());
     QCOMPARE(e.result(), 4.0);
 }
@@ -80,6 +80,13 @@ void TestQExpression::functionWithWrongNumberOfArguments()
     QExpression e("max_of_three(1, 2)");
     QVERIFY(!e.eval());
     QCOMPARE(e.error(), QExpression::WrongNumberOfArguments);
+}
+
+void TestQExpression::unaryOperator()
+{
+    QExpression e("1 + (3! / 6)");
+    QVERIFY(e.eval());
+    QCOMPARE(e.result(), 2.0);
 }
 
 int main(int argc, char **argv)

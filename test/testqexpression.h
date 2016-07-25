@@ -22,6 +22,7 @@ private slots:
     void sampleFunction();
     void functionWithThreeParameters();
     void functionWithWrongNumberOfArguments();
+    void unaryOperator();
 };
 
 #endif // TESTQEXPRESSION_H

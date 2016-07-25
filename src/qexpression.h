@@ -36,6 +36,18 @@ public:
     CustomFunction function() const;
 };
 
+typedef double (*UnaryOperatorFunction)(double a);
+class UnaryOperator : public BaseFunction
+{
+private:
+    UnaryOperatorFunction m_function;
+
+public:
+    UnaryOperator(const QString &name, const int priority,
+                   const UnaryOperatorFunction function);
+    UnaryOperatorFunction function() const;
+};
+
 typedef double (*BinaryOperatorFunction)(double a, double b);
 class BinaryOperator : public BaseFunction
 {
