@@ -1,9 +1,10 @@
+sudo: required
+dist: trusty
 language: cpp
 
 before_install:
- - sudo add-apt-repository --yes ppa:canonical-qt5-edgers/ubuntu1204-qt5
  - sudo apt-get update -qq
- - sudo apt-get install -qq libqt5core5 qt5-qmake qt5-default
+ - sudo apt-get install -qq qt5-default
 
 script:
  - qmake && make && ./QExpression
