@@ -23,6 +23,7 @@ private slots:
     void functionWithThreeParameters();
     void functionWithWrongNumberOfArguments();
     void unaryOperator();
+    void sum();
 };
 
 #endif // TESTQEXPRESSION_H

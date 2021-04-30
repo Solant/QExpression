@@ -89,6 +89,13 @@ void TestQExpression::unaryOperator()
     QCOMPARE(e.result(), 2.0);
 }
 
+void TestQExpression::sum()
+{
+    QExpression e("2 + 2 + 2");
+    QVERIFY(e.eval());
+    QCOMPARE(e.result(), 6);
+}
+
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);

@@ -123,6 +123,9 @@ bool QExpression::toReversePolishNotation()
                 while (currentOperatorPriority
                        <= m_functions.priority(stack.top())) {
                     result += stack.pop() + " ";
+                    if (stack.isEmpty()) {
+                        break;
+                    }
                 }
                 stack.push(symbol);
                 continue;
