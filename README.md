@@ -1,4 +1,4 @@
-![alt badge](https://travis-ci.org/Solant/QExpression.svg?branch=master)
+[![Build Status](https://travis-ci.org/Solant/QExpression.svg?branch=master)](https://travis-ci.org/Solant/QExpression)
 # QExpression
 Simple expression evaluator for Qt framework with customizable operators. <br />
 You need something to evaluate expression and because of reasons you don't use QJSEngine or other similar thing? You came to the right neighborhood! 
